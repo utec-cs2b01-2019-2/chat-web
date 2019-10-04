@@ -3,16 +3,19 @@ $(function(){
     $("#grid").dxDataGrid({
         dataSource: DevExpress.data.AspNet.createStore({
             key: "id",
-            loadUrl: url
+            loadUrl: url ,
+            insertUrl: url ,
+            updateUrl: url ,
+            deleteUrl: url ,
             onBeforeSend: function(method, ajaxOptions) {
                 ajaxOptions.xhrFields = { withCredentials: true };
             }
         }),
 
         editing: {
-            allowUpdating: false,
-            allowDeleting: false,
-            allowAdding: false
+            allowUpdating: true,
+            allowDeleting: true,
+            allowAdding: true
         },
 
         remoteOperations: {
