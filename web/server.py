@@ -1,9 +1,10 @@
 from flask import Flask,render_template, request, session, Response, redirect
 from database import connector
 from model import entities
-import datetime
-import json
+from datetime import datetime
 import time
+import json
+
 
 db = connector.Manager()
 engine = db.createEngine()
@@ -20,8 +21,8 @@ def static_content(content):
 
 @app.route('/users', methods = ['POST'])
 def create_user():
-    #c =  json.loads(request.form['values'])
-    c = json.loads(request.data)
+    c =  json.loads(request.form['values'])
+    #c = json.loads(request.data)
     user = entities.User(
         username=c['username'],
         name=c['name'],
@@ -87,13 +88,14 @@ def create_message():
     c = json.loads(request.form['values'])
     message = entities.Message(
         content=c['content'],
-        sent_on=datetime.datetime(2000,2,2),
         user_from_id=c['user_from_id'],
-        user_to_id=c['user_to_id']
+        user_to_id=c['user_to_id'],
+        sent_on = datetime.utcnow()
     )
     session = db.getSession(engine)
     session.add(message)
     session.commit()
+    print("LA hora actual ",datetime.utcnow());
     return 'Created Message'
 
 @app.route('/messages/<id>', methods = ['GET'])
@@ -182,7 +184,6 @@ def send_message():
 @app.route('/authenticate', methods = ['POST'])
 def authenticate():
     #Get data form request
-    time.sleep(3)
     message = json.loads(request.data)
     username = message['username']
     password = message['password']
@@ -197,10 +198,10 @@ def authenticate():
             ).one()
         session['logged_user'] = user.id
         message = {'message':'Authorized'}
-        return Response(message, status=200,mimetype='application/json')
+        return Response(json.dumps(message,cls=connector.AlchemyEncoder), status=200,mimetype='application/json')
     except Exception:
         message = {'message':'Unauthorized'}
-        return Response(message, status=401,mimetype='application/json')
+        return Response(json.dumps(message,cls=connector.AlchemyEncoder), status=401,mimetype='application/json')
 
 @app.route('/current', methods = ['GET'])
 def current_user():
