@@ -27,6 +27,6 @@ class Message(connector.Manager.Base):
     user_to = relationship(User, foreign_keys=[user_to_id])
 
 class Group(connector.Manager.Base):
-    __tablename__ = "groups"
+    __tablename__ = "chat_groups"
     id = Column(Integer, Sequence('groups_id_seq'), primary_key=True)
     name = Column(String(500))
