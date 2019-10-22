@@ -5,7 +5,7 @@ from database import connector
 
 
 class User(connector.Manager.Base):
-    __tablename__ = 'users'
+    __tablename__ = 'chat_users'
     id = Column(Integer, Sequence('user_id_seq'), primary_key=True)
     name = Column(String(50))
     fullname = Column(String(50))
@@ -14,7 +14,7 @@ class User(connector.Manager.Base):
 
 
 class Message(connector.Manager.Base):
-    __tablename__ = 'messages'
+    __tablename__ = 'chat_messages'
     id = Column(Integer, Sequence('message_id_seq'), primary_key=True)
     content = Column(String(500))
     sent_on = Column(DateTime(), default=datetime.datetime.utcnow, nullable=False)
@@ -30,4 +30,3 @@ class Group(connector.Manager.Base):
     __tablename__ = "groups"
     id = Column(Integer, Sequence('groups_id_seq'), primary_key=True)
     name = Column(String(500))
-
