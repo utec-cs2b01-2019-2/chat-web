@@ -6,7 +6,7 @@ from database import connector
 
 class User(connector.Manager.Base):
     __tablename__ = 'users'
-    id = Column(Integer, Sequence('char_user_id_seq'), primary_key=True)
+    id = Column(Integer, Sequence('chat_user_id_seq'), primary_key=True)
     name = Column(String(50))
     fullname = Column(String(50))
     password = Column(String(12))

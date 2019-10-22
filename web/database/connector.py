@@ -9,7 +9,7 @@ class Manager:
     session = None
 
     def createEngine(self):
-        uri = "postgres://rsndnjzjclgmpy:c630555a93d52ac472316c561294f98f9b05d391fa29c355570a97b69a1a6cba@ec2-107-20-244-40.compute-1.amazonaws.com:5432/d5ufa2a9unmjtr"
+        uri = "postgres://hykdvzdnspumgk:1f8630a7def478c1d44b3ee5443642bdbbc54c0ff5150eef536e6f5ad97a2bd2@ec2-184-73-209-230.compute-1.amazonaws.com:5432/dbmfaom42rta9n"
         engine = create_engine(uri, echo=False)
         self.Base.metadata.create_all(engine)
         return engine
