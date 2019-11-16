@@ -197,11 +197,25 @@ def authenticate():
             ).filter(entities.User.password==password
             ).one()
         session['logged_user'] = user.id
-        message = {'message':'Authorized'}
+        message = {'message':'Authorized', 'user_id': user.id, 'username': user.username}
         return Response(json.dumps(message,cls=connector.AlchemyEncoder), status=200,mimetype='application/json')
     except Exception:
         message = {'message':'Unauthorized'}
         return Response(json.dumps(message,cls=connector.AlchemyEncoder), status=401,mimetype='application/json')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @app.route('/current', methods = ['GET'])
 def current_user():
@@ -267,4 +281,4 @@ def delete_group(id):
 
 if __name__ == '__main__':
     app.secret_key = ".."
-    app.run(debug=True,port=80, threaded=True, use_reloader=False)
+    app.run(debug=True,port=8000, threaded=True, use_reloader=False)
